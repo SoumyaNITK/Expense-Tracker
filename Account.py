@@ -27,7 +27,7 @@ def init_db():
 
 # ---------------- ADD TRANSACTION ----------------
 def add_transaction():
-    account = input("Enter account name ( Bank / PB ): ").strip().upper()
+    account = input("Enter account name : ").strip().upper()
     amount = float(input("Amount: "))
     type_ = input("Type (Income/Expense): ").strip().capitalize()
     note = input("Note (optional): ")
