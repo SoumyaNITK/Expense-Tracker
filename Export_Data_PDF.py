@@ -27,12 +27,10 @@ def export_to_pdf():
         print("❌ No transactions found to export.")
         return
 
-    # Calculate Summary
     income = sum(row[2] for row in data if row[3].lower() == 'income')
     expense = sum(row[2] for row in data if row[3].lower() == 'expense')
     balance = income - expense
 
-    # Setup PDF
     doc = SimpleDocTemplate(PDF_NAME, pagesize=A4)
     elements = []
     styles = getSampleStyleSheet()
@@ -40,11 +38,9 @@ def export_to_pdf():
     styles.add(ParagraphStyle(name='NormalBlue', textColor=colors.HexColor('#003366')))
     styles.add(ParagraphStyle(name='SummaryRight', alignment=TA_RIGHT, textColor=colors.HexColor('#002244'), fontSize=12))
 
-    # Title
     title = Paragraph("Personal Expense Report", styles['TitleCenter'])
     date = Paragraph(f"Generated on: {datetime.now().strftime('%d %B %Y, %I:%M %p')}", styles['NormalBlue'])
 
-    # Summary Section
     summary = Paragraph(f"""
         <b>Total Income:</b> Rs. {income:,.2f}<br/>
         <b>Total Expense:</b> Rs. {expense:,.2f}<br/>
@@ -53,12 +49,10 @@ def export_to_pdf():
 
     elements.extend([title, Spacer(1, 12), date, Spacer(1, 12), summary, Spacer(1, 24)])
 
-    # Table Headers
     table_data = [['S.No', 'Account', 'Amount (Rs)', 'Type', 'Note', 'Date']]
     for idx, row in enumerate(data, start=1):
         table_data.append([str(idx)] + list(map(str, row[1:])))
 
-    # Table Styling
     table = Table(table_data, repeatRows=1, colWidths=[40, 80, 70, 60, 150, 90])
     table.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#003366')),
@@ -70,7 +64,6 @@ def export_to_pdf():
         ('FONTSIZE', (0, 1), (-1, -1), 9),
         ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
 
-        # Alternating row colors
         ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#f0f8ff')),
         ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.HexColor('#e6f2ff'), colors.white]),
 
@@ -81,7 +74,6 @@ def export_to_pdf():
 
     elements.append(table)
 
-    # Build PDF with page number footer
     def add_page_number(canvas, doc):
         page_num = canvas.getPageNumber()
         text = f"Page {page_num}"
