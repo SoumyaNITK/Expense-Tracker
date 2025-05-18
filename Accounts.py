@@ -3,6 +3,7 @@ from datetime import datetime
 import hashlib
 import os
 import getpass
+from Export_Data_PDF import export_to_pdf
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -27,7 +28,7 @@ def init_db():
 
 # ---------------- ADD TRANSACTION ----------------
 def add_transaction():
-    account = input("Enter account name : ").strip().upper()
+    account = input("Enter account name ( Bank / PB ): ").strip().upper()
     amount = float(input("Amount: "))
     type_ = input("Type (Income/Expense): ").strip().capitalize()
     note = input("Note (optional): ")
@@ -128,7 +129,8 @@ def main():
         print("1. Add transaction")
         print("2. View all transactions")
         print("3. View balances")
-        print("4. Exit")
+        print("4. Generate PDF report")
+        print("5. Exit")
         choice = input("Choose an option: ").strip()
 
         if choice == '1':
@@ -138,6 +140,8 @@ def main():
         elif choice == '3':
             view_balance()
         elif choice == '4':
+            export_to_pdf()
+        elif choice == '5':
             print("Bye! Stay wealthy, Gudu 💸")
             break
         else:
