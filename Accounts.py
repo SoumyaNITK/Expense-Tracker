@@ -9,7 +9,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 DB_NAME = os.path.join(BASE_DIR, "expenses.db")
 
-# ---------------- DB SETUP ----------------
+
 def init_db():
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
@@ -26,7 +26,7 @@ def init_db():
     conn.commit()
     conn.close()
 
-# ---------------- ADD TRANSACTION ----------------
+
 def add_transaction():
     account = input("Enter account name ( Bank / PB ): ").strip().upper()
     amount = float(input("Amount: "))
@@ -46,7 +46,7 @@ def add_transaction():
     conn.close()
     print("✅ Transaction added.\n")
 
-# ---------------- VIEW TRANSACTIONS ----------------
+
 def view_transactions():
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
@@ -64,7 +64,7 @@ def view_transactions():
         print(f"{r[0]:<3} {r[1]:<10} {r[2]:<10.2f} {r[3]:<8} {r[5]:<12} {r[4]}")
     print()
 
-# ---------------- VIEW BALANCE ----------------
+
 def view_balance():
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
@@ -118,7 +118,7 @@ def verify_password():
         return False
 
 
-# ---------------- MENU ----------------
+
 def main():
     if not verify_password():
         return
